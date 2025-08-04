@@ -4,7 +4,10 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
 
 export default function VoteSummary() {
   const { votes } = useContext(VoteContext);
-  const data = Object.entries(votes).map(([name, count]) => ({ name, count }));
+  const data = Object.entries(votes).map(([name, voters]) => ({
+    name,
+    count: voters.length,
+  }));
 
   return (
     <div className="mt-8 bg-gray-50 p-4 rounded-xl shadow-inner">

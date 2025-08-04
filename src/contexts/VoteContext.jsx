@@ -4,21 +4,27 @@ export const VoteContext = createContext();
 
 export const VoteProvider = ({ children }) => {
   const [votes, setVotes] = useState({
-    alice: 0,
-    bob: 0,
-    charlie: 0,
+    alice: [],
+    bob: [],
+    charlie: [],
   });
-  const [hasVoted, setHasVoted] = useState(false);
+  const [voters, setVoters] = useState({}); // { voterName: candidate }
 
-  const castVote = candidate => {
-    if (hasVoted) return false;
-    setVotes(v => ({ ...v, [candidate]: v[candidate] + 1 }));
-    setHasVoted(true);
+  const castVote = (candidate, voterName) => {
+    if (!voterName || voters[voterName]) return false;
+    setVotes(v => ({
+      ...v,
+      [candidate]: [...v[candidate], voterName],
+    }));
+    setVoters(v => ({
+      ...v,
+      [voterName]: candidate,
+    }));
     return true;
   };
 
   return (
-    <VoteContext.Provider value={{ votes, hasVoted, castVote }}>
+    <VoteContext.Provider value={{ votes, voters, castVote }}>
       {children}
     </VoteContext.Provider>
   );
