@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { VoteContext } from '../contexts/VoteContext';
 
-const VoteForm = () => {
+const VoteForm = ({ onClose }) => {
   const { castVote } = useContext(VoteContext);
   const [voterName, setVoterName] = useState('');
   const [selectedCandidate, setSelectedCandidate] = useState('');
@@ -49,9 +49,22 @@ const VoteForm = () => {
   return (
     <div className="mb-8 max-w-md mx-auto">
       <div className="bg-white rounded-2xl shadow-xl p-6 border border-gray-100">
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Cast Your Vote</h2>
+        <div className="flex items-start justify-between mb-4">
+          <h2 className="text-2xl font-bold text-gray-800">Cast Your Vote</h2>
+          {onClose && (
+            <button
+              onClick={onClose}
+              aria-label="Close"
+              className="text-gray-500 hover:text-gray-700 ml-3 rounded-full p-1"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+            </button>
+          )}
+        </div>
         
-        <form onSubmit={handleSubmit} className="space-y-4">
+  <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">
               Your Name
